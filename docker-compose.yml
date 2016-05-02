@@ -1,0 +1,12 @@
+moodle:
+  image: 'moodle:latest'
+  restart: always
+  hostname: 'fizban03.rz.tu-harburg.de'
+  ports:
+    - '30080:80'
+    - '30443:443'
+    - '30022:22'
+  volumes:
+    - '/docker_volumes/srv/moodle:/usr/share/nginx/html/'
+
+
