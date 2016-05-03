@@ -1,5 +1,4 @@
 FROM ubuntu:14.04.4
-MAINTAINER Ric Harvey <ric@ngineered.co.uk>
 
 # Surpress Upstart errors/warning
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -80,9 +79,9 @@ RUN chmod 755 /start.sh
 #RUN chown -Rf www-data.www-data /usr/share/nginx/html/
 
 # Download HumHub Community Edition
-RUN wget https://download.moodle.org/moodle/moodle-latest.tgz -P /tmp
+RUN wget https://download.moodle.org/stable30/moodle-latest-30.tgz -P /tmp
 RUN rm -rf /tmp/moodle
-RUN tar xf /tmp/moodle-latest.tgz -C /tmp
+RUN tar xf /tmp/moodle-latest-30.tgz -C /tmp
 #RUN mv /tmp/moodle /usr/share/nginx
 #RUN rm -rf /usr/share/nginx/html
 #RUN mv /usr/share/nginx/moodle /usr/share/nginx/html
