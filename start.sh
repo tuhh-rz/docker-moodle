@@ -10,5 +10,6 @@ ln -s "$SHARED_FOLDER"/moodledata /var/www
 
 chown -Rf www-data.www-data "$SHARED_FOLDER"/moodledata 
 
+/usr/sbin/a2enmod ssl
 
 /usr/local/bin/supervisord -n
