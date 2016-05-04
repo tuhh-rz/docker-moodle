@@ -30,8 +30,6 @@ ADD ./conf/certs/cert.pem /etc/apache2/ssl/cert.pem
 ADD ./conf/certs/private_key.pem /etc/apache2/ssl/private_key.pem
 ADD ./conf/certs/cert-chain.pem /etc/apache2/ssl/cert-chain.pem
 
-ADD ./conf/moodle.conf /etc/apache2/sites-available/moodle.conf
-
 RUN mkdir -p /usr/local/share/moodle/config
 ADD ./conf/config.php /usr/local/share/moodle/config/config.php
 
