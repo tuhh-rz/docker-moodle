@@ -14,7 +14,7 @@ RUN apt-get -y upgrade
 RUN apt-get -y install python-setuptools curl git unzip
 
 # Moodle Requirements
-RUN apt-get -y install apache2 php5 php5-gd libapache2-mod-php5 wget supervisor php5-pgsql vim curl libcurl3 libcurl3-dev php5-curl php5-xmlrpc php5-intl php5-mysql
+RUN apt-get -y install apache2 php5 php5-ldap php5-gd libapache2-mod-php5 wget supervisor php5-pgsql vim curl libcurl3 libcurl3-dev php5-curl php5-xmlrpc php5-intl php5-mysql
 
 # SSH
 RUN apt-get -y install openssh-server
