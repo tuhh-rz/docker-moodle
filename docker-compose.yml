@@ -7,6 +7,7 @@ moodle:
     - '30443:443'
     - '30022:22'
   volumes:
-    - '/docker_volumes/srv/moodle/moodledata:/usr/share/nginx/moodledata'
+    - '/docker_volumes/srv/moodle/moodledata:/usr/local/share/moodle/moodledata'
+    - '/docker_volumes/srv/moodle/config:/usr/local/share/moodle/config'
   external_links:
-    - mariadb_db_1:db
+    - mariadb_mariadb_1:db
