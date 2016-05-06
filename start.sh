@@ -18,4 +18,6 @@ sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.con
 
 sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
 
+ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
+
 /usr/local/bin/supervisord -n
