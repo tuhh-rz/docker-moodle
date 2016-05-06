@@ -34,8 +34,18 @@ RUN mkdir -p /usr/local/share/moodle/config
 ADD ./conf/config.php /usr/local/share/moodle/config/config.php
 
 #ADD https://download.moodle.org/moodle/moodle-latest.tgz /var/www/moodle-latest.tgz
+
+# TODO 
+# > git repository verwenden
+# git clone -b MOODLE_30_STABLE git://git.moodle.org/moodle.git 
+# > neuester Branch mit
+# git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
+
+
 ADD https://download.moodle.org/stable30/moodle-latest-30.tgz /var/www/moodle-latest.tgz
 RUN cd /var/www; tar zxvf moodle-latest.tgz; mv /var/www/moodle /var/www/html
+
+
 RUN chown -R www-data:www-data /var/www/html/moodle
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
