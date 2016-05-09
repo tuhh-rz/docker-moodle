@@ -9,6 +9,6 @@ moodle:
   volumes:
     - '/docker_volumes/srv/moodle/moodledata:/usr/local/share/moodle/moodledata'
     - '/docker_volumes/srv/moodle/config:/usr/local/share/moodle/config'
-    - '/docker_volumes/srv/moodle/themes:/usr/local/share/moodle/themes'
+    - '/docker_volumes/srv/moodle/plugins:/usr/local/share/moodle/plugins'
   external_links:
     - mariadb_mariadb_1:db
