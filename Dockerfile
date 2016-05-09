@@ -30,27 +30,28 @@ ADD ./conf/certs/cert.pem /etc/apache2/ssl/cert.pem
 ADD ./conf/certs/private_key.pem /etc/apache2/ssl/private_key.pem
 ADD ./conf/certs/cert-chain.pem /etc/apache2/ssl/cert-chain.pem
 
-RUN mkdir -p /usr/local/share/moodle/config
-ADD ./conf/config.php /usr/local/share/moodle/config/config.php
+# RUN mkdir -p /usr/local/share/moodle
+# ADD ./conf/config.php /usr/local/share/moodle/config.php
 
-#ADD https://download.moodle.org/moodle/moodle-latest.tgz /var/www/moodle-latest.tgz
+# ADD https://download.moodle.org/moodle/moodle-latest.tgz /var/www/moodle-latest.tgz
 
 # TODO 
 # > git repository verwenden
-# git clone -b MOODLE_30_STABLE git://git.moodle.org/moodle.git 
+RUN git clone -b MOODLE_30_STABLE git://git.moodle.org/moodle.git /tmp/moodle
 # > neuester Branch mit
 # git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
 
+#RUN mkdir -p /usr/local/share/moodle/app
+# ADD https://download.moodle.org/stable30/moodle-latest-30.tgz /tmp/moodle-latest.tgz
+#RUN cd /tmp; tar zxvf moodle-latest.tgz; mv /tmp/moodle /var/www/html
 
-ADD https://download.moodle.org/stable30/moodle-latest-30.tgz /var/www/moodle-latest.tgz
-RUN cd /var/www; tar zxvf moodle-latest.tgz; mv /var/www/moodle /var/www/html
+# ADD ./conf/config.php /usr/local/share/moodle/config.php
 
-
-RUN chown -R www-data:www-data /var/www/html/moodle
+#RUN chown -R www-data:www-data /var/www/moodle
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
 # Crontab
-RUN echo "* * * * * su -s /bin/bash -c '/usr/bin/php /var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+RUN echo "* * * * * su -s /bin/bash -c '/var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 
 EXPOSE 22 80
 CMD ["/bin/bash", "/start.sh"]
