@@ -1,4 +1,4 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -11,10 +11,10 @@ RUN apt-get update
 RUN apt-get -y upgrade
  
 # Basic Requirements
-RUN apt-get -y install python-setuptools curl git unzip
+RUN apt-get -y install python-setuptools cron curl git unzip
 
 # Moodle Requirements
-RUN apt-get -y install apache2 php5 php5-ldap php5-gd libapache2-mod-php5 wget supervisor php5-pgsql vim curl libcurl3 libcurl3-dev php5-curl php5-xmlrpc php5-intl php5-mysql
+RUN apt-get -y install apache2 php php-ldap php-gd libapache2-mod-php libapache2-mod-shib2 wget supervisor php-pgsql vim curl libcurl3 libcurl3-dev php-curl php-xmlrpc php-intl php-xml php-soap php-mbstring php-zip php-mysql
 
 # SSH
 RUN apt-get -y install openssh-server
@@ -29,6 +29,10 @@ RUN mkdir -p /etc/apache2/ssl
 ADD ./conf/certs/cert.pem /etc/apache2/ssl/cert.pem
 ADD ./conf/certs/private_key.pem /etc/apache2/ssl/private_key.pem
 ADD ./conf/certs/cert-chain.pem /etc/apache2/ssl/cert-chain.pem
+
+# Shibboleth
+RUN wget https://www.aai.dfn.de/fileadmin/metadata/dfn-aai.pem -P /etc/apache2/ssl/
+ADD ./conf/shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 # RUN mkdir -p /usr/local/share/moodle
 # ADD ./conf/config.php /usr/local/share/moodle/config.php
@@ -51,7 +55,7 @@ RUN git clone -b MOODLE_30_STABLE git://git.moodle.org/moodle.git /tmp/moodle
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
 # Crontab
-RUN echo "* * * * * su -s /bin/bash -c '/var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+RUN echo "* * * * * su -s /bin/bash -c '/usr/bin/php /var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 
 EXPOSE 22 80
 CMD ["/bin/bash", "/start.sh"]

@@ -29,6 +29,10 @@ sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.con
 
 sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
 
+sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType None\nRequire all granted\n<\/Location>\n<Directory  \/var\/www\/html\/moodle\/auth\/shibboleth\/index.php>\nAuthType shibboleth\nShibRequireSession On\nrequire valid-user\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/default-ssl.conf
+
+mkdir -p /etc/apache2/shibboleth
+
 #tar zxvf /tmp/moodle-latest.tgz -C /tmp
 rsync -rc /tmp/moodle /var/www/html
 chown -Rf www-data.www-data /var/www/html
