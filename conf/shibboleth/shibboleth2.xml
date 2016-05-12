@@ -40,7 +40,7 @@
     points into to this section.
     -->
     <ApplicationDefaults id="default" policyId="default"
-        entityID="https://www.tuhh.de/shibboleth"
+        entityID="https://fizban03.rz.tu-harburg.de/shibboleth"
         REMOTE_USER="uid" >
 
         <!--
