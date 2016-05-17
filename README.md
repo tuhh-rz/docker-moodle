@@ -27,9 +27,6 @@ Die Datei *[docker-compose.yml](https://fizban02.rz.tu-harburg.de/Docker/moodle/
 Die Datei *[start.sh](https://fizban02.rz.tu-harburg.de/Docker/moodle/blob/master/start.sh)*
 ==
 
-- Bei jedem Start wird eine Aktualisierung von Moodle durchgeführt
-
-
 TODOs
 ==
 
