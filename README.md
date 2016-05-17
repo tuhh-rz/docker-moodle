@@ -28,8 +28,6 @@ Die Datei *[start.sh](https://fizban02.rz.tu-harburg.de/Docker/moodle/blob/maste
 ==
 
 - Bei jedem Start wird eine Aktualisierung von Moodle durchgeführt
-- Durch die Verwendung von `rsync -c …` werden keine Dateien überschrieben, die nachträglich hinzugefügt wurden, z.B. im Web-UI nachträglich installierte Themes.
-- Die Dateien, die im Git-Repository enthalten sind werden überschrieben, wenn diese sich geändert haben
 
 
 TODOs
