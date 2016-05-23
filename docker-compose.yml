@@ -9,5 +9,6 @@ moodle:
   volumes:
     - '/docker_volumes/srv/moodle/data:/var/www/moodledata'
     - '/docker_volumes/srv/moodle/app:/var/www/html/moodle'
+    - '/docker_volumes/srv/moodle/etc/apache2/ssl:/etc/apache2/ssl'
   external_links:
     - mariadb_mariadb_1:db
