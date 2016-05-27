@@ -12,3 +12,5 @@ moodle:
     - '/docker_volumes/srv/moodle/etc/apache2/ssl:/etc/apache2/ssl'
   external_links:
     - mariadb_mariadb_1:db
+  security_opt:
+    - no-new-privileges
