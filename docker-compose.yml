@@ -17,8 +17,8 @@ services:
       - mariadb_mariadb_1:db
     security_opt:
       - no-new-privileges
-    logging:    
-      driver: syslog
-      options:
-          syslog-address: "tcp://fizban.rz.tu-harburg.de:514"
+#    logging:    
+#      driver: syslog
+#      options:
+#          syslog-address: "tcp://fizban.rz.tu-harburg.de:514"
 
