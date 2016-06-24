@@ -28,7 +28,7 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 RUN mkdir -p /etc/apache2/ssl
 
 # Shibboleth
-RUN wget https://www.aai.dfn.de/fileadmin/metadata/dfn-aai.pem -P /etc/apache2/ssl/
+#RUN wget https://www.aai.dfn.de/fileadmin/metadata/dfn-aai.pem -P /etc/apache2/ssl/
 ADD ./conf/shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 # RUN mkdir -p /usr/local/share/moodle

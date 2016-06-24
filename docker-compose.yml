@@ -1,22 +1,18 @@
-version: '2'
-
-services:
-  moodle:
-    image: 'local/moodle:latest'
-    restart: always
-    hostname: 'moodle'
-    ports:
-      - '30080:80'
-      - '30443:443'
-      - '30022:22'
-    volumes:
-      - '/docker_volumes/srv/moodle/data:/var/www/moodledata'
-      - '/docker_volumes/srv/moodle/app:/var/www/html/moodle'
-      - '/docker_volumes/srv/moodle/etc/apache2/ssl:/etc/apache2/ssl'
-    external_links:
-      - mariadb_mariadb_1:db
-    security_opt:
-      - no-new-privileges
+moodle:
+  image: 'local/moodle:latest'
+  restart: always
+  hostname: 'moodle'
+  ports:
+    - '30080:80'
+    - '30443:443'
+  volumes:
+    - '/docker_volumes/srv/moodle/data:/var/www/moodledata'
+    - '/docker_volumes/srv/moodle/app:/var/www/html/moodle'
+    - '/docker_volumes/srv/moodle/etc/apache2/ssl:/etc/apache2/ssl'
+  external_links:
+    - mariadb_mariadb_1:db
+  security_opt:
+    - no-new-privileges
 #    logging:    
 #      driver: syslog
 #      options:
