@@ -1,0 +1,10 @@
+deployment_system:
+    only:
+        - deployment
+    tags:
+        - deployment
+    script:
+        - docker build --no-cache -t local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID .
+        - docker tag local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID localhost:5000/moodle:latest
+        - docker push localhost:5000/moodle:latest
+        - docker rmi local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID
