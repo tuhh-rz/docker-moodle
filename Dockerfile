@@ -38,7 +38,7 @@ ADD ./conf/shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 # TODO 
 # > git repository verwenden
-RUN git clone -b MOODLE_30_STABLE git://git.moodle.org/moodle.git /tmp/moodle
+RUN git clone -b MOODLE_31_STABLE git://git.moodle.org/moodle.git /tmp/moodle
 # > neuester Branch mit
 # git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
 

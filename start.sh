@@ -40,4 +40,4 @@ chown -Rf www-data.www-data /var/www/moodledata
 
 ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
 
-/usr/local/bin/supervisord -n
+/usr/local/bin/supervisord -n -c /etc/supervisord.conf

@@ -1,5 +1,5 @@
 moodle:
-  image: 'local/moodle:latest'
+  image: 'local/moodle:3.1'
   restart: always
   hostname: 'moodle'
   ports:
