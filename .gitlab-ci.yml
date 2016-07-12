@@ -4,7 +4,6 @@ deployment_system:
     tags:
         - master
     script:
-        - docker build --no-cache -t local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID .
-        - docker tag local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID localhost:5000/moodle:latest
-        - docker push localhost:5000/moodle:latest
-        - docker rmi local/moodle:$CI_PROJECT_ID.$CI_BUILD_ID
+        - docker build --no-cache -t local/moodle:tmp_$CI_PROJECT_ID.$CI_BUILD_ID .
+        - docker tag local/moodle:tmp_$CI_PROJECT_ID.$CI_BUILD_ID docker.rz.tu-harburg.de:5000/moodle:latest
+        - docker push docker.rz.tu-harburg.de:5000/moodle:latest
