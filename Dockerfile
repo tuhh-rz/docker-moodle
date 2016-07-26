@@ -52,7 +52,7 @@ RUN git clone -b MOODLE_31_STABLE git://git.moodle.org/moodle.git /tmp/moodle
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
 # Crontab
-RUN echo "5 * * * * su -s /bin/bash -c '/usr/bin/php /var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+RUN echo "*/5 * * * * su -s /bin/bash -c '/usr/bin/php /var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 
 EXPOSE 22 80
 CMD ["/bin/bash", "/start.sh"]
