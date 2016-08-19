@@ -1,6 +1,7 @@
-deployment_system:
+job:
     only:
-        - master
+        - tags
+        - triggers
     tags:
         - master
     script:
