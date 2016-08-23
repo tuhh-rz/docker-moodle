@@ -41,6 +41,12 @@ rsync -rc /tmp/moodle /var/www/html
 chown -Rf www-data.www-data /var/www/html
 chown -Rf www-data.www-data /var/www/moodledata
 
+# It is recommended that the file permissions of config.php are changed after
+# installation so that the file cannot be modified by the web server. Please
+# note that this measure does not improve security of the server significantly,
+# though it may slow down or limit general exploits.
+chmod -w /var/www/html/moodle/config.php
+
 ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
 
 /usr/local/bin/supervisord -n -c /etc/supervisord.conf
