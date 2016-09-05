@@ -5,4 +5,4 @@ job:
     tags:
         - master
     script:
-        - ~/imagebuilder $CI_BUILD_REPO $CI_PROJECT_DIR $CI_PROJECT_ID $CI_BUILD_ID .
+        - ~/imagebuilder --no-cache --build-repo $CI_BUILD_REPO --project-dir $CI_PROJECT_DIR --project-id $CI_PROJECT_ID --build-id $CI_BUILD_ID --build-tag latest .
