@@ -24,3 +24,4 @@ TODOs
 - Das Root-Verzeichnis könnte angepasst werden, so dass kein Pfad in der URL verwendet werden muss, dazu muss aber auch eine bestehende `config.php` angepasst werden
 
 # Shibboleth
+
