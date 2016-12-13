@@ -1,8 +1,33 @@
-job:
+variables:
+    # we need lower case!!!
+    CI_PROJECT_NAMESPACE: docker
+    CONTAINER_TEST_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_BUILD_REF_NAME
+    CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
+
+stages:
+    - build
+    - deploy
+
+build:
+    stage: build
     only:
         - tags
         - triggers
+        - branches
     tags:
-        - master
+        - build
     script:
-        - ~/imagebuilder --no-cache --build-repo $CI_BUILD_REPO --project-dir $CI_PROJECT_DIR --project-id $CI_PROJECT_ID --build-id $CI_BUILD_ID --build-tag latest .
+        - sudo docker build --pull -t $CONTAINER_TEST_IMAGE .
+        - sudo docker push $CONTAINER_TEST_IMAGE
+        
+deploy:
+    stage: deploy
+    script:
+        - sudo docker pull $CONTAINER_TEST_IMAGE
+        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+        - sudo docker push $CONTAINER_RELEASE_IMAGE
+    tags:
+        - deploy
+    only:
+        - triggers
+        - master
