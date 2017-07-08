@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 
+ENV MOODLE_VERSION MOODLE_33_STABLE
+
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
@@ -38,7 +40,7 @@ ADD ./conf/shibboleth/shibboleth2.xml /etc/shibboleth/shibboleth2.xml
 
 # TODO 
 # > git repository verwenden
-RUN git clone -b MOODLE_32_STABLE git://git.moodle.org/moodle.git /tmp/moodle
+RUN git clone -b ${MOODLE_VERSION} git://git.moodle.org/moodle.git /tmp/moodle
 # > neuester Branch mit
 # git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
 
