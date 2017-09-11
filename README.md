@@ -1,1 +1,0 @@
-- Bump version Moodle 3.3.1+ (Build: 20170901) Version 2017051501.11 (Stable version)
