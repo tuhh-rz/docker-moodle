@@ -19,6 +19,7 @@ docker_image:
         - build
     script:
         - sudo docker build --no-cache --pull -t $CONTAINER_TEST_IMAGE .
+        - sudo docker build --pull -t $CONTAINER_TEST_IMAGE .
         - sudo docker push $CONTAINER_TEST_IMAGE
         
 deploy_latest:
@@ -27,6 +28,7 @@ deploy_latest:
         - sudo docker pull $CONTAINER_TEST_IMAGE
         - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
         # !!! Version als secret variable `LATEST_VERSION` unter https://collaborating.tuhh.de/Docker/moodle/settings/ci_cd eintragen
+        - echo $LATEST_VERSION
         - sudo docker tag $CONTAINER_TEST_IMAGE $LATEST_VERSION
         - sudo docker push $CONTAINER_RELEASE_IMAGE
         - sudo docker push $LATEST_VERSION
