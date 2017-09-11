@@ -28,10 +28,9 @@ deploy_latest:
     script:
         - sudo docker pull $CONTAINER_TEST_IMAGE
         - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-        # !!! Version als secret variable `LATEST_VERSION` unter https://collaborating.tuhh.de/Docker/moodle/settings/ci_cd eintragen
-        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_VERSION_IMAGE
+        - if [ -z ${LATEST_VERSION+x} ]; then sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_VERSION_IMAGE; fi
         - sudo docker push $CONTAINER_RELEASE_IMAGE
-        - sudo docker push $CONTAINER_RELEASE_VERSION_IMAGE
+        - if [ -z ${LATEST_VERSION+x} ]; then sudo docker push $CONTAINER_RELEASE_VERSION_IMAGE; fi
     after_script:
         ## Child Images bauen
         #- curl -X POST -F token=${PROJECT_362_TOKEN} -F ref=${CI_COMMIT_REF_NAME} "https://collaborating.tuhh.de/api/v4/projects/362/trigger/pipeline"
