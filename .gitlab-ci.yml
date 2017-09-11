@@ -26,7 +26,9 @@ deploy_latest:
     script:
         - sudo docker pull $CONTAINER_TEST_IMAGE
         - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+        - sudo docker tag $CONTAINER_TEST_IMAGE $LATEST_VERSION
         - sudo docker push $CONTAINER_RELEASE_IMAGE
+        - sudo docker push $LATEST_VERSION
     after_script:
         ## Child Images bauen
         #- curl -X POST -F token=${PROJECT_362_TOKEN} -F ref=${CI_COMMIT_REF_NAME} "https://collaborating.tuhh.de/api/v4/projects/362/trigger/pipeline"
