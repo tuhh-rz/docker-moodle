@@ -1,10 +1,13 @@
 variables:
+    # Das Image aus welchen Branch soll mit `latest` getagt werden?
+    CURRENT_BRANCH: 3.3-stable
+
     # we need lower case!!!
     CI_PROJECT_NAMESPACE: docker
+    
     CONTAINER_TEST_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_PIPELINE_ID
     CONTAINER_VERSIONED_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CI_COMMIT_REF_NAME
     CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:latest
-    CURRENT_BRANCH: 3.3-stable
     CONTAINER_RELEASE_VERSION_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME:$CURRENT_BRANCH
 
 stages:
@@ -23,31 +26,27 @@ docker_image:
         - sudo docker build --no-cache --pull -t $CONTAINER_TEST_IMAGE .
         - sudo docker push $CONTAINER_TEST_IMAGE
         
-deploy_latest:
-    stage: deploy
-    script:
-        - sudo docker pull $CONTAINER_TEST_IMAGE
-        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_VERSION_IMAGE; fi
-        - sudo docker push $CONTAINER_RELEASE_IMAGE
-        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker push $CONTAINER_RELEASE_VERSION_IMAGE; fi
-    after_script:
-        ## Child Images bauen
-        #- curl -X POST -F token=${PROJECT_362_TOKEN} -F ref=${CI_COMMIT_REF_NAME} "https://collaborating.tuhh.de/api/v4/projects/362/trigger/pipeline"
-    tags:
-        - deploy
-    only:
-        - master
+#deploy_latest:
+#    stage: deploy
+#    script:
+#        - sudo docker pull $CONTAINER_TEST_IMAGE
+#        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+#        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_VERSION_IMAGE; fi
+#        - sudo docker push $CONTAINER_RELEASE_IMAGE
+#        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker push $CONTAINER_RELEASE_VERSION_IMAGE; fi
+#    tags:
+#        - deploy
+#    only:
+#        - master
         
 deploy_version:
     stage: deploy
     script:
         - sudo docker pull $CONTAINER_TEST_IMAGE
         - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_VERSIONED_IMAGE
+        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker tag "${CONTAINER_TEST_IMAGE}" "${$CONTAINER_RELEASE_VERSION_IMAGE}"; fi
         - sudo docker push $CONTAINER_VERSIONED_IMAGE
-    after_script:
-        ## Child Images bauen
-        #- curl -X POST -F token=${PROJECT_362_TOKEN} -F ref=${CI_COMMIT_REF_NAME} "https://collaborating.tuhh.de/api/v4/projects/362/trigger/pipeline"
+        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker push "${CONTAINER_TEST_IMAGE}" "${$CONTAINER_RELEASE_VERSION_IMAGE}"; fi
     tags:
         - deploy
     only:
