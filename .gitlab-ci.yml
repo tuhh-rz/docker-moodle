@@ -44,9 +44,9 @@ deploy_version:
     script:
         - sudo docker pull $CONTAINER_TEST_IMAGE
         - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_VERSIONED_IMAGE
-        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker tag "${CONTAINER_TEST_IMAGE}" "${$CONTAINER_RELEASE_VERSION_IMAGE}"; fi
+        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker tag "${CONTAINER_TEST_IMAGE}" "${CONTAINER_RELEASE_VERSION_IMAGE}"; fi
         - sudo docker push $CONTAINER_VERSIONED_IMAGE
-        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker push "${CONTAINER_TEST_IMAGE}" "${$CONTAINER_RELEASE_VERSION_IMAGE}"; fi
+        - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker push "${CONTAINER_TEST_IMAGE}" "${CONTAINER_RELEASE_VERSION_IMAGE}"; fi
     tags:
         - deploy
     only:
