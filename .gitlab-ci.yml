@@ -23,7 +23,7 @@ docker_image:
     tags:
         - build
     script:
-        - sudo docker build --no-cache --pull -t $CONTAINER_TEST_IMAGE .
+        - sudo docker build --pull -t $CONTAINER_TEST_IMAGE .
         - sudo docker push $CONTAINER_TEST_IMAGE
         
 #deploy_latest:
