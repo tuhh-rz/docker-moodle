@@ -22,7 +22,7 @@ docker_image:
     tags:
         - build
     script:
-        - sudo docker build --no-cache --pull -t $CONTAINER_TEST_IMAGE .
+        - if [ -z ${CURRENT_BRANCH+x} ]; sudo docker build --no-cache --pull -t "${CONTAINER_TEST_IMAGE}" .; fi
 
 # Deployment der Images `latest` 
 deploy:master:
