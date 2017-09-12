@@ -23,7 +23,7 @@ docker_image:
         - build
     script:
         # Nur, wenn es keinen CURRENT_BRANCH gibt oder wenn es einen gibt und es aber nicht der Master-Branch ist
-        - if [ -z ${CURRENT_BRANCH+x} ] || [ "${CI_COMMIT_REF_NAME}" != "latest" ]; then sudo docker build --no-cache --pull -t "${CONTAINER_TEST_IMAGE}" .; fi
+        - if [ -z ${CURRENT_BRANCH+x} ] || [ "${CI_COMMIT_REF_NAME}" != "master" ]; then sudo docker build --no-cache --pull -t "${CONTAINER_TEST_IMAGE}" .; fi
 
 # Deployment der Images `latest` 
 deploy:master:
