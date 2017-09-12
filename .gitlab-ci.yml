@@ -25,27 +25,27 @@ docker_image:
     script:
         - sudo docker build --no-cache --pull -t $CONTAINER_TEST_IMAGE .
         - sudo docker push $CONTAINER_TEST_IMAGE
-        
-#deploy_latest:
-#    stage: deploy
-#    script:
-#        - sudo docker pull $CONTAINER_TEST_IMAGE
-#        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
-#        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_VERSION_IMAGE; fi
-#        - sudo docker push $CONTAINER_RELEASE_IMAGE
-#        - if [ ! -z ${CURRENT_BRANCH+x} ]; then sudo docker push $CONTAINER_RELEASE_VERSION_IMAGE; fi
-#    tags:
-#        - deploy
-#    only:
-#        - master
-        
-deploy_version:
+       
+# Deployment der Images `latest` 
+deploy:master:
     stage: deploy
     script:
-        - sudo docker pull $CONTAINER_TEST_IMAGE
-        - sudo docker tag $CONTAINER_TEST_IMAGE $CONTAINER_VERSIONED_IMAGE
+        - sudo docker pull "${CONTAINER_TEST_IMAGE}"
+        - if [ -z ${CURRENT_BRANCH+x} ]; then sudo docker tag "${CONTAINER_TEST_IMAGE}" "${CONTAINER_RELEASE_IMAGE}"; fi
+        - if [ -z ${CURRENT_BRANCH+x} ]; then sudo docker push "${CONTAINER_RELEASE_IMAGE}"; fi
+    tags:
+        - deploy
+    only:
+        - master
+
+# Deployment der Images mit Versionstag und gegebenenfalls `latest`
+deploy:version:
+    stage: deploy
+    script:
+        - sudo docker pull "${CONTAINER_TEST_IMAGE}"
+        - sudo docker tag "${CONTAINER_TEST_IMAGE}" "$CONTAINER_VERSIONED_IMAGE"
         - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker tag "${CONTAINER_TEST_IMAGE}" "${CONTAINER_RELEASE_IMAGE}"; fi
-        - sudo docker push $CONTAINER_VERSIONED_IMAGE
+        - sudo docker push "${CONTAINER_VERSIONED_IMAGE}"
         - if [ ! -z ${CURRENT_BRANCH+x} ] && [ "${CI_COMMIT_REF_NAME}" == "${CURRENT_BRANCH}" ]; then sudo docker push "${CONTAINER_RELEASE_IMAGE}"; fi
     tags:
         - deploy
