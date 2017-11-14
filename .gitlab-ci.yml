@@ -37,13 +37,11 @@ variables:
         - sudo docker push "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}"
 
 stages:
-    - build:version
-    - deploy:version
-    - build:dev
-    - deploy:dev
+    - build
+    - deploy
 
 build:3.4:
-    stage: build:version
+    stage: build
     retry: 2
     only:
         - master
@@ -56,7 +54,7 @@ build:3.4:
     script: *build_script_definition
 
 deploy:3.4:
-    stage: deploy:version
+    stage: deploy
     tags:
         - deploy
     only:
@@ -67,7 +65,7 @@ deploy:3.4:
     script: *deploy_script_definition
 
 build:branches:3.4:
-    stage: build:version
+    stage: build
     retry: 2
     only:
         - branches
@@ -82,7 +80,7 @@ build:branches:3.4:
     script: *build_branches_script_definition
 
 deploy:branches:3.4:
-    stage: deploy:version
+    stage: deploy
     tags:
         - deploy
     only:
@@ -96,7 +94,7 @@ deploy:branches:3.4:
 
 
 build:3.3:
-    stage: build:version
+    stage: build
     retry: 2
     only:
         - master
@@ -109,7 +107,7 @@ build:3.3:
     script: *build_script_definition
 
 deploy:3.3:
-    stage: deploy:version
+    stage: deploy
     tags:
         - deploy
     only:
@@ -120,7 +118,7 @@ deploy:3.3:
     script: *deploy_script_definition
 
 build:branches:3.3:
-    stage: build:version
+    stage: build
     retry: 2
     only:
         - branches
@@ -135,7 +133,7 @@ build:branches:3.3:
     script: *build_branches_script_definition
 
 deploy:branches:3.3:
-    stage: deploy:version
+    stage: deploy
     tags:
         - deploy
     only:
@@ -148,7 +146,7 @@ deploy:branches:3.3:
     script: *deploy_branches_script_definition
 
 build:rztab:
-    stage: build:dev
+    stage: build
     retry: 2
     only:
         - master
@@ -161,7 +159,7 @@ build:rztab:
     script: *build_script_definition
 
 deploy:rztab:
-    stage: deploy:dev
+    stage: deploy
     tags:
         - deploy
     only:
@@ -172,7 +170,7 @@ deploy:rztab:
     script: *deploy_script_definition
 
 build:branches:rztab:
-    stage: build:dev
+    stage: build
     retry: 2
     only:
         - branches
@@ -187,7 +185,7 @@ build:branches:rztab:
     script: *build_branches_script_definition
 
 deploy:branches:rztab:
-    stage: deploy:dev
+    stage: deploy
     tags:
         - deploy
     only:
