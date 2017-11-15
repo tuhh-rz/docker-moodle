@@ -21,17 +21,17 @@ ln -s "$SHARED_FOLDER"/moodledata /var/www
 
 chown -Rf www-data.www-data "$SHARED_FOLDER"/moodledata
 
-#/usr/sbin/a2enmod ssl
-#
-#sed -i '/SSLCertificateFile/d' /etc/apache2/sites-available/default-ssl.conf
-#sed -i '/SSLCertificateKeyFile/d' /etc/apache2/sites-available/default-ssl.conf
-#sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.conf
-#
-#sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
-#
-#sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType None\nRequire all granted\n<\/Location>\n<Directory  \/var\/www\/html\/moodle\/auth\/shibboleth\/index.php>\nAuthType shibboleth\nShibRequireSession On\nrequire valid-user\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/default-ssl.conf
+/usr/sbin/a2enmod ssl
 
-#sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/default-ssl.conf
+sed -i '/SSLCertificateFile/d' /etc/apache2/sites-available/default-ssl.conf
+sed -i '/SSLCertificateKeyFile/d' /etc/apache2/sites-available/default-ssl.conf
+sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.conf
+
+sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
+
+sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType None\nRequire all granted\n<\/Location>\n<Directory  \/var\/www\/html\/moodle\/auth\/shibboleth\/index.php>\nAuthType shibboleth\nShibRequireSession On\nrequire valid-user\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/default-ssl.conf
+
+sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/default-ssl.conf
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/000-default.conf
 
 #mkdir -p /etc/apache2/shibboleth
