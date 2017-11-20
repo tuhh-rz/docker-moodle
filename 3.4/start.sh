@@ -19,7 +19,7 @@ chown -Rf www-data.www-data "$SHARED_FOLDER"
 # moodledata in den Host plazieren
 ln -s "$SHARED_FOLDER"/moodledata /var/www
 
-chown -Rf www-data.www-data "$SHARED_FOLDER"/moodledata 
+chown -Rf www-data.www-data "$SHARED_FOLDER"/moodledata
 
 /usr/sbin/a2enmod ssl
 
@@ -34,7 +34,7 @@ sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/default-ssl.conf
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/000-default.conf
 
-mkdir -p /etc/apache2/shibboleth
+#mkdir -p /etc/apache2/shibboleth
 
 #tar zxvf /tmp/moodle-latest.tgz -C /tmp
 rsync -rc /tmp/moodle /var/www/html
