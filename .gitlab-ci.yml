@@ -145,7 +145,7 @@ deploy:branches:3.3:
         VARIANT: ''
     script: *deploy_branches_script_definition
 
-build:rztab:
+.build:rztab:
     stage: build
     retry: 2
     only:
@@ -158,7 +158,7 @@ build:rztab:
     before_script: *build_before_script_definition
     script: *build_script_definition
 
-deploy:rztab:
+.deploy:rztab:
     stage: deploy
     tags:
         - deploy
@@ -169,7 +169,7 @@ deploy:rztab:
         VARIANT: ''
     script: *deploy_script_definition
 
-build:branches:rztab:
+.build:branches:rztab:
     stage: build
     retry: 2
     only:
@@ -184,7 +184,7 @@ build:branches:rztab:
     before_script: *build_branches_before_script_definition
     script: *build_branches_script_definition
 
-deploy:branches:rztab:
+.deploy:branches:rztab:
     stage: deploy
     tags:
         - deploy
