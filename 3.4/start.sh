@@ -34,6 +34,11 @@ sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/default-ssl.conf
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/000-default.conf
 
+# Upload size
+sed -i 's/upload_max_filesize.*/upload_max_filesize = 100M/g' /etc/php/7.0/apache2/php.ini
+sed -i 's/post_max_size.*/post_max_size = 100M/g' /etc/php/7.0/apache2/php.ini
+sed -i 's/max_execution_time.*/max_execution_time = 360/g' /etc/php/7.0/apache2/php.ini
+
 #mkdir -p /etc/apache2/shibboleth
 
 #tar zxvf /tmp/moodle-latest.tgz -C /tmp
