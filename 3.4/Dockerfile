@@ -37,6 +37,8 @@ RUN mkdir -p /etc/apache2/ssl
 # TODO 
 # > git repository verwenden
 RUN git clone -b ${MOODLE_VERSION} git://git.moodle.org/moodle.git /tmp/moodle
+RUN rm -rf /tmp/moodle/.git
+
 # > neuester Branch mit
 # git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
 
