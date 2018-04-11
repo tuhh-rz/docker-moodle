@@ -35,8 +35,8 @@ sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/si
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/000-default.conf
 
 # Upload size
-sed -i 's/upload_max_filesize.*/upload_max_filesize = 1000M/g' /etc/php/7.0/apache2/php.ini
-sed -i 's/post_max_size.*/post_max_size = 1000M/g' /etc/php/7.0/apache2/php.ini
+sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.0/apache2/php.ini
+sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.0/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.0/apache2/php.ini
 
 #mkdir -p /etc/apache2/shibboleth
