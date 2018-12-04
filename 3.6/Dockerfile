@@ -12,13 +12,11 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update
 RUN apt-get -y upgrade
 
-RUN apt-get install -y software-properties-common && add-apt-repository universe
- 
 # Basic Requirements
 RUN apt-get -y install python-setuptools cron curl git unzip
 
 # Moodle Requirements
-RUN apt-get -y install apache2 php php-ldap php-gd libapache2-mod-php libapache2-mod-shib2 wget supervisor php-pgsql vim curl php-curl php-xmlrpc php-intl php-xml php-soap php-mbstring php-zip php-mysql
+RUN apt-get -y install apache2 php php-ldap php-gd libapache2-mod-php wget supervisor php-pgsql vim curl php-curl php-xmlrpc php-intl php-xml php-soap php-mbstring php-zip php-mysql
 
 # SSH
 RUN apt-get -y install openssh-server
