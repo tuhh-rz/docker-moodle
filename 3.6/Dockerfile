@@ -16,13 +16,32 @@ RUN apt-get -y upgrade
 RUN apt-get -y install python-setuptools cron curl git unzip
 
 # Moodle Requirements
-RUN apt-get -y install apache2 php php-ldap php-gd libapache2-mod-php wget supervisor php-pgsql vim curl php-curl php-xmlrpc php-intl php-xml php-soap php-mbstring php-zip php-mysql
+RUN apt-get -y install \
+    apache2 \
+    curl \
+    libapache2-mod-php \
+    php \
+    php-curl \
+    php-gd \
+    php-intl \
+    php-ldap \
+    php-mbstring \
+    php-mysql \
+    php-pgsql \
+    php-soap \
+    php-xml \
+    php-xmlrpc \
+    php-zip \
+    supervisor
+    supervisor \
+    vim \
+    wget
 
 # SSH
 RUN apt-get -y install openssh-server
 RUN mkdir -p /var/run/sshd
 
-RUN easy_install supervisor
+# RUN easy_install supervisor
 ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./conf/supervisord.conf /etc/supervisord.conf
