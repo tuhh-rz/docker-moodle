@@ -33,6 +33,7 @@ RUN apt-get -y install \
     php-xmlrpc \
     php-zip \
     supervisor \
+    rsync \
     vim \
     wget
 
