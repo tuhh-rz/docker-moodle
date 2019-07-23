@@ -1,6 +1,6 @@
 FROM ubuntu:18.04
 
-ENV MOODLE_VERSION 3.7.0
+ENV MOODLE_VERSION 3.7.1
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
