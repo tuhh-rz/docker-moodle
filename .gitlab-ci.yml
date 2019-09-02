@@ -52,6 +52,7 @@ build:3.7:
 
 deploy:3.7:
     stage: deploy
+    needs: ["build:3.7"]
     tags:
         - deploy
     only:
@@ -77,6 +78,7 @@ build:branches:3.7:
     script: *build_branches_script_definition
 
 deploy:branches:3.7:
+    needs: ["build:branches:3.7"]
     stage: deploy
     tags:
         - deploy
@@ -104,6 +106,7 @@ build:3.6:
 
 deploy:3.6:
     stage: deploy
+    needs: ["build:3.6"]
     tags:
         - deploy
     only:
@@ -130,6 +133,7 @@ build:branches:3.6:
 
 deploy:branches:3.6:
     stage: deploy
+    needs: ["build:branches:3.6"]
     tags:
         - deploy
     only:
@@ -156,6 +160,7 @@ build:3.5:
 
 deploy:3.5:
     stage: deploy
+    needs: ["build:3.5"]
     tags:
         - deploy
     only:
@@ -182,6 +187,7 @@ build:branches:3.5:
 
 deploy:branches:3.5:
     stage: deploy
+    needs: ["build:branches:3.5"]
     tags:
         - deploy
     only:
