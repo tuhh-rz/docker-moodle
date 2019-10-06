@@ -2,20 +2,6 @@
 
 SHARED_FOLDER="/usr/local/share/moodle"
 
-chown -Rf www-data.www-data /var/www/html/
-chown -Rf www-data.www-data "$SHARED_FOLDER"
-
-# Konfiguration in den Host plazieren
-#ln -s "$SHARED_FOLDER"/config.php /var/www/html/moodle/config.php
-
-
-## TODO Plugin-Verzeichnisse im Host plazieren
-
-# > rsync um Aenderungen an den Themes zu übernehmen, die aus einem Release Upgrade stammen
-#rsync -rc /var/www/html/moodle/theme "$SHARED_FOLDER"
-#rm -rf /var/www/html/moodle/theme
-#ln -s "$SHARED_FOLDER"/theme /var/www/html/moodle/theme
-
 # moodledata in den Host plazieren
 ln -s "$SHARED_FOLDER"/moodledata /var/www
 
@@ -29,8 +15,6 @@ sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.con
 
 sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
 
-# sed -i 's/<\/VirtualHost>/<Location \/Shibboleth.sso>\nSetHandler shib\nAuthType None\nRequire all granted\n<\/Location>\n<Directory  \/var\/www\/html\/moodle\/auth\/shibboleth\/index.php>\nAuthType shibboleth\nShibRequireSession On\nrequire valid-user\n<\/Directory>\n<\/VirtualHost>/' /etc/apache2/sites-available/default-ssl.conf
-
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/default-ssl.conf
 sed -i 's/DocumentRoot.*/DocumentRoot \/var\/www\/html\/moodle/' /etc/apache2/sites-available/000-default.conf
 
@@ -39,21 +23,17 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.2/apac
 sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.2/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.2/apache2/php.ini
 
-#mkdir -p /etc/apache2/shibboleth
-
-#tar zxvf /tmp/moodle-latest.tgz -C /tmp
 rsync -rc /tmp/moodle /var/www/html
+
+cd /var/www/html/moodle && /usr/bin/php admin/cli/upgrade.php --non-interactive
+find /var/www/html ! -user www-data -exec chown www-data: {} \;
+find /var/www/moodledata ! -user www-data -exec chown www-data: {} \;
 
 # It is recommended that the file permissions of config.php are changed after
 # installation so that the file cannot be modified by the web server. Please
 # note that this measure does not improve security of the server significantly,
 # though it may slow down or limit general exploits.
 chmod -w /var/www/html/moodle/config.php
-
-cd /var/www/html/moodle && /usr/bin/php admin/cli/upgrade.php --non-interactive
-chown -Rf www-data.www-data /var/www/html
-chown -Rf www-data.www-data /var/www/moodledata
-
 
 ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
 
