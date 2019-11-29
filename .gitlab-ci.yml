@@ -1,6 +1,6 @@
 variables:
     CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    LATEST_VERSION: '3.6'
+    LATEST_VERSION: '3.8'
 
 .build_script_template:
     script:  &build_script_definition
