@@ -1,6 +1,8 @@
 FROM ubuntu:18.04
 
-ENV MOODLE_VERSION 3.7.3
+ARG VERSION=${VERSION:-3.7.3}
+ENV VERSION=$VERSION
+RUN echo $VERSION
 
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
@@ -55,7 +57,7 @@ RUN mkdir -p /etc/apache2/ssl
 
 # TODO 
 # > git repository verwenden
-RUN git clone -b "v${MOODLE_VERSION}" https://github.com/moodle/moodle /tmp/moodle
+RUN git clone -b "v${VERSION}" https://github.com/moodle/moodle /tmp/moodle
 RUN rm -rf /tmp/moodle/.git
 
 # > neuester Branch mit

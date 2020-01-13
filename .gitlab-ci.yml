@@ -4,8 +4,12 @@ variables:
 
 .build_script_template:
     script:  &build_script_definition
-        - pwd
-        - sudo docker build --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+    - pwd
+    - key="Moodle ${VERSION}"
+    - build_version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
+    - if [[ -z $build_version ]]; then build_version="$VERSION"; fi
+    - sudo docker build --build-arg VERSION="${build_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+
 
 .build_before_script_template:
     before_script:  &build_before_script_definition
