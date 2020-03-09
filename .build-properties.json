@@ -1,0 +1,13 @@
+{
+  "docker-tags": {
+    "3.6": {
+      "build-branch": "master"
+    },
+    "3.7": {
+      "build-branch": "master"
+    },
+    "3.8": {
+      "build-branch": "master"
+    }
+  }
+}
