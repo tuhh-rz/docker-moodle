@@ -11,6 +11,8 @@ variables:
     - if [[ -z $version ]]; then exit 1; fi
     - version=$(echo $version | sed -e 's/%2B/+/g')
 
+    - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+
 .build_before_script_template:
     before_script:  &build_before_script_definition
         - pwd
