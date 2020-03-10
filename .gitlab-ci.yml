@@ -6,10 +6,10 @@ variables:
     script:  &build_script_definition
     - pwd
     - key="Moodle ${VERSION}"
-    - build_version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
-    - if [[ -z $build_version ]]; then build_version="$VERSION"; fi
-    - sudo docker build --build-arg VERSION="${build_version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
 
+    - version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
+    - if [[ -z $version ]]; then exit 1; fi
+    - version=$(echo $version | sed -e 's/%2B/+/g')
 
 .build_before_script_template:
     before_script:  &build_before_script_definition
