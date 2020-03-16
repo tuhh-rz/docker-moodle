@@ -1,0 +1,23 @@
+{
+    "active": true,
+    "registries": [{
+            "name": "collaborating.tuhh.de:5005",
+            "state": "ignore"
+        },
+        {
+            "name": "docker.rz.tu-harburg.de:5000",
+            "state": "present"
+        }
+    ],
+    "image-tags": {
+        "3.6": {
+            "action": "build"
+        },
+        "3.7": {
+            "action": "build"
+        },
+        "3.8": {
+            "action": "build"
+        }
+    }
+}
