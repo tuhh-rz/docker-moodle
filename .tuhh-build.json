@@ -1,5 +1,10 @@
 {
     "active": true,
+    "version-check": {
+        "active": true,
+        "master_key": "Moodle",
+        "version_digits_in_key": 2
+    },
     "registries": [{
             "name": "collaborating.tuhh.de:5005",
             "state": "ignore"
