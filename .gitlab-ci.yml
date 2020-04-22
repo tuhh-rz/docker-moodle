@@ -1,17 +1,22 @@
 variables:
     CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
     LATEST_VERSION: '3.8'
+    APP: 'Moodle'
+    MAPPING: '3:3.8'
 
 .build_script_template:
-    script:  &build_script_definition
-    - pwd
-    - key="Moodle ${VERSION}"
+    script: &build_script_definition
+        - pwd
+        - key="${APP} ${VERSION}"
 
-    - version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
-    - if [[ -z $version ]]; then exit 1; fi
-    - version=$(echo $version | sed -e 's/%2B/+/g')
+        - version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
+        - if [[ -z $version ]]; then exit 1; fi
+        - version=$(echo $version | sed -e 's/%2B/+/g')
 
-    - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
+        # - download=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .download')
+        # - if [[ -z $download ]]; then exit 1; fi
+
+        - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}" "${VERSION}"/"${VARIANT}"
 
 .build_before_script_template:
     before_script:  &build_before_script_definition
@@ -27,7 +32,16 @@ variables:
 .build_branches_script_template:
     script:  &build_branches_script_definition
         - pwd
-        - sudo docker build --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"
+        - key="${APP} ${VERSION}"
+
+        - version=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .version')
+        - if [[ -z $version ]]; then exit 1; fi
+        - version=$(echo $version | sed -e 's/%2B/+/g')
+
+        # - download=$(curl -s https://cgi.tu-harburg.de/~rztwww/Software/program_file.json | jq --arg KEY "$key" --raw-output '.[$KEY] | .download')
+        # - if [[ -z $download ]]; then exit 1; fi
+
+        - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --no-cache --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"
 
 .build_branches_before_script_template:
     before_script:  &build_branches_before_script_definition
