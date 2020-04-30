@@ -26,8 +26,8 @@ sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.2/apache2/
 rsync -rc /tmp/moodle /var/www/html
 
 cd /var/www/html/moodle && /usr/bin/php admin/cli/upgrade.php --non-interactive
-find /var/www/html ! -user www-data -exec chown www-data: {} \;
-find /var/www/moodledata ! -user www-data -exec chown www-data: {} \;
+find /var/www/html ! -user www-data -exec chown www-data: {} +
+find /var/www/moodledata ! -user www-data -exec chown www-data: {} +
 
 # It is recommended that the file permissions of config.php are changed after
 # installation so that the file cannot be modified by the web server. Please
