@@ -3,6 +3,7 @@
     "version-check": {
         "active": true,
         "master_key": "Moodle",
+        "sub_key": "Moodle",
         "version_digits_in_key": 2
     },
     "registries": [{
