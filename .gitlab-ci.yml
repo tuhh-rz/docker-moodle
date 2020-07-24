@@ -27,8 +27,8 @@ variables:
     - if [[ -z $version ]] || [[ $version == "null" ]]; then exit 1; fi
     - version=$(echo $version | sed -e 's/%2B/+/g')
 
-    # - download=$(curl -s ${APP_OVERVIEW_URL} | jq --arg KEY "$KEY" --arg APP "$APP" --raw-output '.[$APP] | .[$KEY] | .download')
-    # - if [[ -z $download ]] || [[ $download == "null" ]]; then exit 1; fi
+    - download=$(curl -s ${APP_OVERVIEW_URL} | jq --arg KEY "$KEY" --arg APP "$APP" --raw-output '.[$APP] | .[$KEY] | .download')
+    - if [[ -z $download ]] || [[ $download == "null" ]]; then exit 1; fi
 
     - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"    
 
