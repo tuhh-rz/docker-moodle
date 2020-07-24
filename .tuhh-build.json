@@ -16,9 +16,6 @@
         }
     ],
     "image-tags": {
-        "3.6": {
-            "action": "build"
-        },
         "3.7": {
             "action": "build"
         },
