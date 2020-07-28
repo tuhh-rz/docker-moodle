@@ -53,7 +53,7 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN mkdir -p /etc/apache2/ssl
 
-RUN mkdir -p /tmp/moodle && curl $DOWNLOAD \
+RUN curl $DOWNLOAD \
   | tar -xzC /tmp
 
 #RUN mkdir -p /usr/local/share/moodle/app
