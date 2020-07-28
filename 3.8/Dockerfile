@@ -15,8 +15,7 @@ RUN ln -sf /bin/true /sbin/initctl
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update && apt-get -y upgrade
 
 # Basic Requirements
 RUN apt-get -y install python-setuptools cron curl git unzip

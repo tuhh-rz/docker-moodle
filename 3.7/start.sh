@@ -5,7 +5,7 @@ SHARED_FOLDER="/usr/local/share/moodle"
 # moodledata in den Host plazieren
 ln -s "$SHARED_FOLDER"/moodledata /var/www
 
-chown -Rf www-data.www-data "$SHARED_FOLDER"/moodledata
+find "$SHARED_FOLDER"/moodledata ! -user www-data -exec chown www-data: {} +
 
 /usr/sbin/a2enmod ssl
 
@@ -23,7 +23,7 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.2/apac
 sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.2/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.2/apache2/php.ini
 
-rsync -rc /tmp/moodle /var/www/html
+rsync -au /tmp/moodle /var/www/html
 
 cd /var/www/html/moodle && /usr/bin/php admin/cli/upgrade.php --non-interactive
 find /var/www/html ! -user www-data -exec chown www-data: {} +
