@@ -4,6 +4,10 @@ ARG VERSION=${VERSION}
 ENV VERSION=$VERSION
 RUN echo $VERSION
 
+ARG DOWNLOAD=${DOWNLOAD}
+ENV DOWNLOAD=$DOWNLOAD
+RUN echo $DOWNLOAD
+
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
@@ -11,8 +15,7 @@ RUN ln -sf /bin/true /sbin/initctl
 # Let the conatiner know that there is no tty
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update && apt-get -y upgrade
 
 # Basic Requirements
 RUN apt-get -y install python-setuptools cron curl git unzip
@@ -36,7 +39,6 @@ RUN apt-get -y install \
     php-zip \
     supervisor \
     rsync \
-    vim \
     wget
 
 # SSH
@@ -50,15 +52,14 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN mkdir -p /etc/apache2/ssl
 
+RUN curl $DOWNLOAD \
+  | tar -xzC /tmp
+
 # RUN mkdir -p /usr/local/share/moodle
 # ADD ./conf/config.php /usr/local/share/moodle/config.php
 
 # ADD https://download.moodle.org/moodle/moodle-latest.tgz /var/www/moodle-latest.tgz
 
-# TODO 
-# > git repository verwenden
-RUN git clone -b "v${VERSION}" https://github.com/moodle/moodle /tmp/moodle
-RUN rm -rf /tmp/moodle/.git
 
 # > neuester Branch mit
 # git branch -a | awk '/remotes.*STABLE/ {print}' | awk -F/ 'END {print $3}'
