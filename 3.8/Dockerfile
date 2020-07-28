@@ -53,8 +53,8 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN mkdir -p /etc/apache2/ssl
 
-RUN curl $DOWNLOAD \
-  | tar -xjC /tmp/moodle
+RUN mkdir -p /tmp/moodle && curl $DOWNLOAD \
+  | tar -xzC /tmp
 
 #RUN mkdir -p /usr/local/share/moodle/app
 # ADD https://download.moodle.org/stable30/moodle-latest-30.tgz /tmp/moodle-latest.tgz
