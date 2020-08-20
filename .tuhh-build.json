@@ -1,26 +1,30 @@
 {
+  "active": true,
+  "version-check": {
     "active": true,
-    "version-check": {
-        "active": true,
-        "master_key": "Moodle",
-        "sub_key": "Moodle",
-        "version_digits_in_key": 2
+    "master_key": "Moodle",
+    "sub_key": "Moodle",
+    "version_digits_in_key": 2
+  },
+  "registries": [
+    {
+      "name": "collaborating.tuhh.de:5005",
+      "state": "ignore"
     },
-    "registries": [{
-            "name": "collaborating.tuhh.de:5005",
-            "state": "ignore"
-        },
-        {
-            "name": "docker.rz.tu-harburg.de:5000",
-            "state": "present"
-        }
-    ],
-    "image-tags": {
-        "3.7": {
-            "action": "build"
-        },
-        "3.8": {
-            "action": "build"
-        }
+    {
+      "name": "docker.rz.tu-harburg.de:5000",
+      "state": "present"
     }
+  ],
+  "image-tags": {
+    "3.7": {
+      "action": "build"
+    },
+    "3.8": {
+      "action": "build"
+    }
+  },
+  "upgrade-check": {
+    "active": true
+  }
 }
