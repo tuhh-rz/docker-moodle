@@ -1,5 +1,5 @@
 variables:
-    CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de:5000/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+    CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
     LATEST_VERSION: '3.8'
     APP: 'Moodle'
     APP_OVERVIEW_URL: https://cgi.tu-harburg.de/~rztwww/Software/program_file.json

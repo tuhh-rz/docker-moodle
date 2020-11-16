@@ -12,7 +12,7 @@
       "state": "ignore"
     },
     {
-      "name": "docker.rz.tu-harburg.de:5000",
+      "name": "docker.rz.tu-harburg.de",
       "state": "present"
     }
   ],
