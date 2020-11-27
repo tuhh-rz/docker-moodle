@@ -22,6 +22,9 @@
     },
     "3.8": {
       "action": "build"
+    },
+    "3.9": {
+      "action": "build"
     }
   },
   "upgrade-check": {

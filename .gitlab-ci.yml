@@ -1,10 +1,10 @@
 variables:
     CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    LATEST_VERSION: '3.8'
+    LATEST_VERSION: '3.9'
     APP: 'Moodle'
     APP_OVERVIEW_URL: https://cgi.tu-harburg.de/~rztwww/Software/program_file.json
     KEY: "${APP} ${VERSION}"
-    MAPPING: '3:3.8'
+    MAPPING: '3:3.9'
 
 .build_script_template:
   script: &build_script_definition
@@ -30,7 +30,7 @@ variables:
     - download=$(curl -s ${APP_OVERVIEW_URL} | jq --arg KEY "$KEY" --arg APP "$APP" --raw-output '.[$APP] | .[$KEY] | .download')
     - if [[ -z $download ]] || [[ $download == "null" ]]; then exit 1; fi
 
-    - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"    
+    - sudo docker build --build-arg DOWNLOAD="${download}" --build-arg VERSION="${version}" --pull -t "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}" "${VERSION}"/"${VARIANT}"
 
 .build_before_script_template:
   before_script: &build_before_script_definition
@@ -57,6 +57,60 @@ variables:
 stages:
     - build
     - deploy
+
+build:3.9:
+    stage: build
+    retry: 2
+    only:
+        - master
+    tags:
+        - build
+    variables:
+        VERSION: '3.9'
+        VARIANT: ''
+    before_script: *build_before_script_definition
+    script: *build_script_definition
+
+deploy:3.9:
+    stage: deploy
+    needs: ["build:3.9"]
+    tags:
+        - deploy
+    only:
+        - master
+    variables:
+        VERSION: '3.9'
+        VARIANT: ''
+    script: *deploy_script_definition
+
+build:branches:3.9:
+    stage: build
+    retry: 2
+    only:
+        - branches
+    except:
+        - master
+    tags:
+        - build
+    variables:
+        VERSION: '3.9'
+        VARIANT: ''
+    before_script: *build_branches_before_script_definition
+    script: *build_branches_script_definition
+
+deploy:branches:3.9:
+    needs: ["build:branches:3.9"]
+    stage: deploy
+    tags:
+        - deploy
+    only:
+        - branches
+    except:
+        - master
+    variables:
+        VERSION: '3.9'
+        VARIANT: ''
+    script: *deploy_branches_script_definition
 
 build:3.8:
     stage: build
