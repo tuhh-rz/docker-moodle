@@ -58,11 +58,78 @@ stages:
     - build
     - deploy
 
+build:3.10:
+    stage: build
+    retry: 2
+    only:
+      refs:
+        - master
+      changes:
+        - ./3.10/***
+    tags:
+        - build
+    variables:
+        VERSION: '3.10'
+        VARIANT: ''
+    before_script: *build_before_script_definition
+    script: *build_script_definition
+
+deploy:3.10:
+    stage: deploy
+    needs: ["build:3.10"]
+    only:
+      refs:
+        - master
+      changes:
+        - ./3.10/***
+    variables:
+        VERSION: '3.10'
+        VARIANT: ''
+    script: *deploy_script_definition
+
+build:branches:3.10:
+    stage: build
+    retry: 2
+    only:
+      refs:
+        - branches
+      changes:
+        - ./3.10/***
+    except:
+        - master
+    tags:
+        - build
+    variables:
+        VERSION: '3.10'
+        VARIANT: ''
+    before_script: *build_branches_before_script_definition
+    script: *build_branches_script_definition
+
+deploy:branches:3.10:
+    needs: ["build:branches:3.10"]
+    stage: deploy
+    tags:
+        - deploy
+    only:
+      refs:
+        - branches
+      changes:
+        - ./3.10/***
+    except:
+        - master
+    variables:
+        VERSION: '3.10'
+        VARIANT: ''
+    script: *deploy_branches_script_definition
+
 build:3.9:
     stage: build
     retry: 2
     only:
+      refs:
         - master
+      changes:
+        - ./3.9/***
     tags:
         - build
     variables:
@@ -77,7 +144,10 @@ deploy:3.9:
     tags:
         - deploy
     only:
+      refs:
         - master
+      changes:
+        - ./3.9/***
     variables:
         VERSION: '3.9'
         VARIANT: ''
@@ -87,7 +157,10 @@ build:branches:3.9:
     stage: build
     retry: 2
     only:
+      refs:
         - branches
+      changes:
+        - ./3.9/***
     except:
         - master
     tags:
@@ -104,7 +177,10 @@ deploy:branches:3.9:
     tags:
         - deploy
     only:
+      refs:
         - branches
+      changes:
+        - ./3.9/***
     except:
         - master
     variables:
@@ -116,7 +192,10 @@ build:3.8:
     stage: build
     retry: 2
     only:
+      refs:
         - master
+      changes:
+        - ./3.8/***
     tags:
         - build
     variables:
@@ -131,7 +210,10 @@ deploy:3.8:
     tags:
         - deploy
     only:
+      refs:
         - master
+      changes:
+        - ./3.8/***
     variables:
         VERSION: '3.8'
         VARIANT: ''
@@ -141,7 +223,10 @@ build:branches:3.8:
     stage: build
     retry: 2
     only:
+      refs:
         - branches
+      changes:
+        - ./3.8/***
     except:
         - master
     tags:
@@ -158,7 +243,10 @@ deploy:branches:3.8:
     tags:
         - deploy
     only:
+      refs:
         - branches
+      changes:
+        - ./3.8/***
     except:
         - master
     variables:
@@ -170,7 +258,10 @@ build:3.7:
     stage: build
     retry: 2
     only:
+      refs:
         - master
+      changes:
+        - ./3.7/***
     tags:
         - build
     variables:
@@ -185,7 +276,10 @@ deploy:3.7:
     tags:
         - deploy
     only:
+      refs:
         - master
+      changes:
+        - ./3.7/***
     variables:
         VERSION: '3.7'
         VARIANT: ''
@@ -195,7 +289,10 @@ build:branches:3.7:
     stage: build
     retry: 2
     only:
+      refs:
         - branches
+      changes:
+        - ./3.7/***
     except:
         - master
     tags:
@@ -212,7 +309,10 @@ deploy:branches:3.7:
     tags:
         - deploy
     only:
+      refs:
         - branches
+      changes:
+        - ./3.7/***
     except:
         - master
     variables:
