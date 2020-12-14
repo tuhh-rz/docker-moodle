@@ -22,7 +22,7 @@ sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.4/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.4/apache2/php.ini
 
 echo "Sync Moodle into $WEBSERVER_ROOT"
-rsync -au /tmp/moodle/ "$WEBSERVER_ROOT"
+rsync -au /tmp/moodle "$WEBSERVER_ROOT"
 
 echo "Install Moodle if neccesary"
 export CHMOD=${CHMOD:-2777}
