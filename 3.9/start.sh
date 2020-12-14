@@ -2,7 +2,6 @@
 
 SHARED_FOLDER="/usr/local/share/moodle"
 
-# moodledata in den Host plazieren
 ln -s "$SHARED_FOLDER"/moodledata /var/www
 
 find "$SHARED_FOLDER"/moodledata ! -user www-data -exec chown www-data: {} +
