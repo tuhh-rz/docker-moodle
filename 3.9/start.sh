@@ -19,9 +19,9 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.4/apac
 sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.4/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.4/apache2/php.ini
 
-rsync -au /tmp/moodle /var/www/html
+rsync -au /tmp/moodle/ /var/www/html
 
-cd /var/www/html/moodle && /usr/bin/php admin/cli/upgrade.php --non-interactive
+cd /var/www/html && /usr/bin/php admin/cli/upgrade.php --non-interactive
 find /var/www/html ! -user www-data -exec chown www-data: {} +
 find /var/www/moodledata ! -user www-data -exec chown www-data: {} +
 
@@ -29,7 +29,7 @@ find /var/www/moodledata ! -user www-data -exec chown www-data: {} +
 # installation so that the file cannot be modified by the web server. Please
 # note that this measure does not improve security of the server significantly,
 # though it may slow down or limit general exploits.
-chmod -w /var/www/html/moodle/config.php
+chmod -w /var/www/html/config.php
 
 ln -s /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
 
