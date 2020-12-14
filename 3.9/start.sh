@@ -1,6 +1,6 @@
 #!/bin/bash
 
-export SHARED_FOLDER=${SHARED_FOLDER:-/usr/local/share/moodle/moodledata}
+export DATAROOT=${DATAROOT:-/usr/local/share/moodle/moodledata}
 export WEBSERVER_ROOT=${WEBSERVER_ROOT:-/var/www/html}
 
 /usr/sbin/a2enmod ssl
@@ -28,7 +28,7 @@ export LANG=${LANG:-en}
 export PREFIX=${PREFIX:-mdl_}
 export DBPORT=${DBPORT:-3306}
 
-su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/install.php --non-interactive --agree-license --dataroot=$SHARED_FOLDER --chmod=$CHMOD --lang=$LANG --wwwroot=$WWWROOT --dbtype=$DBTYPE --dbhost=$DBHOST --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbport=$DBPORT --prefix=$PREFIX --fullname='$FULLNAME' --shortname='$SHORTNAME' --summary='$SUMMARY' --adminuser=$ADMINUSER --adminpass=$ADMINPASS --adminemail=$ADMINEMAIL" www-data
+su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/install.php --non-interactive --agree-license --dataroot=$DATAROOT --chmod=$CHMOD --lang=$LANG --wwwroot=$WWWROOT --dbtype=$DBTYPE --dbhost=$DBHOST --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbport=$DBPORT --prefix=$PREFIX --fullname='$FULLNAME' --shortname='$SHORTNAME' --summary='$SUMMARY' --adminuser=$ADMINUSER --adminpass=$ADMINPASS --adminemail=$ADMINEMAIL" www-data
 
 echo "Upgrade Moodle if neccesary"
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/upgrade.php --non-interactive" www-data
