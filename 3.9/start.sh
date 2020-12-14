@@ -1,7 +1,7 @@
 #!/bin/bash
 
-SHARED_FOLDER="/usr/local/share/moodle/moodledata"
-WEBSERVER_ROOT="/var/www/html"
+export SHARED_FOLDER="/usr/local/share/moodle/moodledata"
+export WEBSERVER_ROOT="/var/www/html"
 
 ln -s "$SHARED_FOLDER" /var/www
 
@@ -21,8 +21,10 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.4/apac
 sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.4/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.4/apache2/php.ini
 
+echo "Sync Moodle into $WEBSERVER_ROOT"
 rsync -au /tmp/moodle/ "$WEBSERVER_ROOT"
 
+echo "Install Moodle if neccesary"
 export CHMOD=${CHMOD:-2777}
 export LANG=${LANG:-en}
 export PREFIX=${PREFIX:-mdl_}
@@ -49,10 +51,12 @@ su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/install.php
   --adminemail=$ADMINEMAIL
 " www-data
 
+echo "Upgrade Moodle if neccesary"
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/upgrade.php
   --non-interactive
 " www-data
 
+echo "Fix permissions"
 find "$WEBSERVER_ROOT" ! -user www-data -exec chown www-data: {} +
 find /var/www/moodledata ! -user www-data -exec chown www-data: {} +
 
