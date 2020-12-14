@@ -65,7 +65,7 @@ build:3.9:
       refs:
         - master
       changes:
-        - ./3.9/***
+        - ./3.9/**
     tags:
         - build
     variables:
@@ -83,7 +83,7 @@ deploy:3.9:
       refs:
         - master
       changes:
-        - ./3.9/***
+        - ./3.9/**
     variables:
         VERSION: '3.9'
         VARIANT: ''
@@ -96,7 +96,7 @@ build:branches:3.9:
       refs:
         - branches
       changes:
-        - ./3.9/***
+        - ./3.9/**
     except:
         - master
     tags:
@@ -116,7 +116,7 @@ deploy:branches:3.9:
       refs:
         - branches
       changes:
-        - ./3.9/***
+        - ./3.9/**
     except:
         - master
     variables:
