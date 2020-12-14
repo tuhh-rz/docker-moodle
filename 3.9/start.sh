@@ -1,6 +1,5 @@
 #!/bin/bash
 
-export DATAROOT=${DATAROOT:-/usr/local/share/moodle/moodledata}
 export WEBSERVER_ROOT=${WEBSERVER_ROOT:-/var/www/html}
 
 /usr/sbin/a2enmod ssl
@@ -28,6 +27,10 @@ export LANG=${LANG:-en}
 export PREFIX=${PREFIX:-mdl_}
 export DBPORT=${DBPORT:-3306}
 
+export DATAROOT=${DATAROOT:-/usr/local/share/moodle/moodledata}
+mkdir -p "$DATAROOT"
+chmod 0777 "$DATAROOT"
+
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/install.php --non-interactive --agree-license --dataroot=$DATAROOT --chmod=$CHMOD --lang=$LANG --wwwroot=$WWWROOT --dbtype=$DBTYPE --dbhost=$DBHOST --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbport=$DBPORT --prefix=$PREFIX --fullname='$FULLNAME' --shortname='$SHORTNAME' --summary='$SUMMARY' --adminuser=$ADMINUSER --adminpass=$ADMINPASS --adminemail=$ADMINEMAIL" www-data
 
 echo "Upgrade Moodle if neccesary"
@@ -35,7 +38,6 @@ su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/upgrade.php --
 
 echo "Fix permissions"
 find "$WEBSERVER_ROOT" ! -user www-data -exec chown www-data: {} +
-find /var/www/moodledata ! -user www-data -exec chown www-data: {} +
 
 echo "Ensure cron.php"
 echo "*/5 * * * * www-data /usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/cron.php" >>/etc/crontab
