@@ -42,14 +42,14 @@ RUN apt-get -y install \
   wget
 
 ADD ./setup.sh /setup.sh
-ADD ./apache.sh /etc/apache2/apache.sh
+ADD ./apache.sh /apache.sh
+RUN chmod 755 /setup.sh /apache.sh
+
 ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
 RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
-
-RUN chmod 755 /setup.sh /etc/apache2/apache.sh
 
 RUN mkdir -p /etc/apache2/ssl
 RUN /usr/sbin/a2enmod ssl
