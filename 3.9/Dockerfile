@@ -41,7 +41,6 @@ RUN apt-get -y install \
   rsync \
   wget
 
-# RUN easy_install supervisor
 ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./conf/supervisord.conf /etc/supervisord.conf
@@ -51,11 +50,9 @@ RUN mkdir -p /etc/apache2/ssl
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
 
-#RUN chown -R www-data:www-data /var/www/moodle
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
 # Crontab
-#RUN echo "*/5 * * * * su -s /bin/bash -c '/usr/bin/php /var/www/html/moodle/admin/cli/cron.php' www-data >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 RUN echo "*/5 *   * * *   www-data        /usr/bin/php /var/www/html/moodle/admin/cli/cron.php" >> /etc/crontab
 
 EXPOSE 80
