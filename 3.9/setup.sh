@@ -12,7 +12,8 @@ sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.4/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.4/apache2/php.ini
 
 echo "$(date +"%Y-%m-%d %T %s") Sync Moodle into ${WEBSERVER_ROOT}${RELATIVE_PATH}"
-rsync -au /tmp/moodle/ "${WEBSERVER_ROOT}${RELATIVE_PATH}"
+mkdir --parents "${WEBSERVER_ROOT}${RELATIVE_PATH}"
+rsync --archive --update /tmp/moodle/ "${WEBSERVER_ROOT}${RELATIVE_PATH}"
 
 echo "$(date +"%Y-%m-%d %T %s") Fix permissions"
 find "${WEBSERVER_ROOT}" ! -user www-data -exec chown www-data: {} +
