@@ -46,7 +46,7 @@ echo "*/5 * * * * www-data /usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/cron.ph
 # installation so that the file cannot be modified by the web server. Please
 # note that this measure does not improve security of the server significantly,
 # though it may slow down or limit general exploits.
-chmod -w "$WEBSERVER_ROOT"/config.php
+chmod -w "$WEBSERVER_ROOT"/moodle/config.php
 
 ln -sf /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-enabled/
 
