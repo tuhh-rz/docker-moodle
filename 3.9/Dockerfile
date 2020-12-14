@@ -52,9 +52,6 @@ RUN curl $DOWNLOAD \
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
-# Crontab
-RUN echo "*/5 *   * * *   www-data        /usr/bin/php /var/www/html/moodle/admin/cli/cron.php" >> /etc/crontab
-
 EXPOSE 80
 CMD ["/bin/bash", "/start.sh"]
 
