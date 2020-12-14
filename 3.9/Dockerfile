@@ -45,13 +45,18 @@ ADD ./start.sh /start.sh
 ADD ./foreground.sh /etc/apache2/foreground.sh
 ADD ./conf/supervisord.conf /etc/supervisord.conf
 
-RUN mkdir -p /etc/apache2/ssl
-
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
 RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
+
+RUN mkdir -p /etc/apache2/ssl
+RUN /usr/sbin/a2enmod ssl
+RUN sed -i '/SSLCertificateFile/d' /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i '/SSLCertificateKeyFile/d' /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl.conf
+RUN sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
 
 EXPOSE 80
 CMD ["/bin/bash", "/start.sh"]
