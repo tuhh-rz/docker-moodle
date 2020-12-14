@@ -49,6 +49,7 @@ RUN mkdir -p /etc/apache2/ssl
 
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
+RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
 
 RUN chmod 755 /start.sh /etc/apache2/foreground.sh
 
