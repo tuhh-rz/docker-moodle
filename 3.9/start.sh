@@ -19,7 +19,7 @@ sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.4/apac
 sed -i 's/post_max_size.*/post_max_size = 1500M/g' /etc/php/7.4/apache2/php.ini
 sed -i 's/max_execution_time.*/max_execution_time = 600/g' /etc/php/7.4/apache2/php.ini
 
-rsync -au /tmp/moodle/ /var/www/html
+rsync -au /tmp/moodle /var/www/html
 
 cd /var/www/html && /usr/bin/php admin/cli/upgrade.php --non-interactive
 find /var/www/html ! -user www-data -exec chown www-data: {} +
