@@ -1,7 +1,7 @@
 #!/bin/bash
 
-export SHARED_FOLDER="/usr/local/share/moodle/moodledata"
-export WEBSERVER_ROOT="/var/www/html"
+export SHARED_FOLDER=${SHARED_FOLDER:-/usr/local/share/moodle/moodledata}
+export WEBSERVER_ROOT=${WEBSERVER_ROOT:-/var/www/html}
 
 ln -s "$SHARED_FOLDER" /var/www
 
@@ -30,30 +30,30 @@ export LANG=${LANG:-en}
 export PREFIX=${PREFIX:-mdl_}
 export DBPORT=${DBPORT:-3306}
 
-su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/install.php
-  --non-interactive
-  --agree-license
-  --chmod=$CHMOD
-  --lang=$LANG
-  --wwwroot=$WWWROOT
-  --dbtype=$DBTYPE
-  --dbhost=$DBHOST
-  --dbname=$DBNAME
-  --dbuser=$DBUSER
-  --dbpass=$DBPASS
-  --dbport=$DBPORT
-  --prefix=$PREFIX
-  --fullname=$FULLNAME
-  --shortname=$SHORTNAME
-  --summary=$SUMMARY
-  --adminuser=$ADMINUSER
-  --adminpass=$ADMINPASS
-  --adminemail=$ADMINEMAIL
+su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/install.php \
+  --non-interactive \
+  --agree-license \
+  --chmod=$CHMOD \
+  --lang=$LANG \
+  --wwwroot=$WWWROOT \
+  --dbtype=$DBTYPE \
+  --dbhost=$DBHOST \
+  --dbname=$DBNAME \
+  --dbuser=$DBUSER \
+  --dbpass=$DBPASS \
+  --dbport=$DBPORT \
+  --prefix=$PREFIX \
+  --fullname=$FULLNAME \
+  --shortname=$SHORTNAME \
+  --summary=$SUMMARY \
+  --adminuser=$ADMINUSER \
+  --adminpass=$ADMINPASS \
+  --adminemail=$ADMINEMAIL \
 " www-data
 
 echo "Upgrade Moodle if neccesary"
-su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/upgrade.php
-  --non-interactive
+su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/upgrade.php \
+  --non-interactive \
 " www-data
 
 echo "Fix permissions"
