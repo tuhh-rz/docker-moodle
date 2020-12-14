@@ -47,7 +47,7 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
-RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
+RUN find /tmp/moodle ! -group www-data -exec chown root:www-data {} +
 
 RUN chmod 755 /setup.sh /etc/apache2/apache.sh
 
