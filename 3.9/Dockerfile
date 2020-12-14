@@ -41,15 +41,15 @@ RUN apt-get -y install \
   rsync \
   wget
 
-ADD ./start.sh /start.sh
-ADD ./foreground.sh /etc/apache2/foreground.sh
+ADD ./setup.sh /setup.sh
+ADD ./apache.sh /etc/apache2/apache.sh
 ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
 RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
 
-RUN chmod 755 /start.sh /etc/apache2/foreground.sh
+RUN chmod 755 /setup.sh /etc/apache2/apache.sh
 
 RUN mkdir -p /etc/apache2/ssl
 RUN /usr/sbin/a2enmod ssl
@@ -59,7 +59,7 @@ RUN sed -i '/SSLCertificateChainFile/d' /etc/apache2/sites-available/default-ssl
 RUN sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/cert.pem\nSSLCertificateKeyFile \/etc\/apache2\/ssl\/private_key.pem\nSSLCertificateChainFile \/etc\/apache2\/ssl\/cert-chain.pem/' /etc/apache2/sites-available/default-ssl.conf
 
 EXPOSE 80
-CMD ["/bin/bash", "/start.sh"]
+CMD ["/bin/bash", "/setup.sh"]
 
 LABEL \
   de.tuhh.ci_repository_url=$CI_REPOSITORY_URL \
