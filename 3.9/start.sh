@@ -35,7 +35,7 @@ su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/admin/cli/install.php
   --agree-license
   --chmod=$CHMOD
   --lang=$LANG
-  --WWWROOT=$WWWROOT
+  --wwwroot=$WWWROOT
   --dbtype=$DBTYPE
   --dbhost=$DBHOST
   --dbname=$DBNAME
