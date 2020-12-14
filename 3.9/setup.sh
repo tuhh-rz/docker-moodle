@@ -2,8 +2,8 @@
 
 export WEBSERVER_ROOT=${WEBSERVER_ROOT:-/var/www/html}
 
-perl -i -pe 's/DocumentRoot.*/DocumentRoot $ENV{'WEBSERVER_ROOT'}/g' /etc/apache2/sites-available/default-ssl.conf
-perl -i -pe 's/DocumentRoot.*/DocumentRoot $ENV{'WEBSERVER_ROOT'}/g' /etc/apache2/sites-available/000-default.conf
+perl -i -pe 's/DocumentRoot.*/DocumentRoot $ENV{'WEBSERVER_ROOT'}\/moodle/g' /etc/apache2/sites-available/default-ssl.conf
+perl -i -pe 's/DocumentRoot.*/DocumentRoot $ENV{'WEBSERVER_ROOT'}\/moodle/g' /etc/apache2/sites-available/000-default.conf
 
 # Upload size
 sed -i 's/upload_max_filesize.*/upload_max_filesize = 1500M/g' /etc/php/7.4/apache2/php.ini
