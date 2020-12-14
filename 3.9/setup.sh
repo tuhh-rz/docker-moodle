@@ -29,7 +29,7 @@ echo "Upgrade Moodle if neccesary"
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/upgrade.php --non-interactive" www-data
 
 echo "Fix permissions"
-find "$WEBSERVER_ROOT" ! -group www-data -exec chown root:www-data {} +
+find "$WEBSERVER_ROOT" ! -user www-data -exec chown www-data: {} +
 
 echo "Ensure cron.php"
 echo "*/5 * * * * www-data /usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/cron.php" >>/etc/crontab
