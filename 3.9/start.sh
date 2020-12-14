@@ -1,10 +1,7 @@
 #!/bin/bash
 
-SHARED_FOLDER="/usr/local/share/moodle"
-
-ln -s "$SHARED_FOLDER"/moodledata /var/www
-
-find "$SHARED_FOLDER"/moodledata ! -user www-data -exec chown www-data: {} +
+SHARED_FOLDER="/usr/local/share/moodle/moodledata"
+ln -s "$SHARED_FOLDER" /var/www
 
 /usr/sbin/a2enmod ssl
 
