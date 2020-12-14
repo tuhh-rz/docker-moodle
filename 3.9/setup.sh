@@ -23,13 +23,13 @@ export DATAROOT=${DATAROOT:-/usr/local/share/moodle/moodledata}
 mkdir -p "$DATAROOT"
 chmod 0777 "$DATAROOT"
 
+echo "Fix permissions"
+find "$WEBSERVER_ROOT" ! -user www-data -exec chown www-data: {} +
+
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/install.php --non-interactive --agree-license --dataroot=$DATAROOT --chmod=$CHMOD --lang=$LANG --wwwroot=$WWWROOT --dbtype=$DBTYPE --dbhost=$DBHOST --dbname=$DBNAME --dbuser=$DBUSER --dbpass=$DBPASS --dbport=$DBPORT --prefix=$PREFIX --fullname='$FULLNAME' --shortname='$SHORTNAME' --summary='$SUMMARY' --adminuser=$ADMINUSER --adminpass=$ADMINPASS --adminemail=$ADMINEMAIL" www-data
 
 echo "Upgrade Moodle if neccesary"
 su -s /bin/bash -c "/usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/upgrade.php --non-interactive" www-data
-
-echo "Fix permissions"
-find "$WEBSERVER_ROOT" ! -user www-data -exec chown www-data: {} +
 
 echo "Ensure cron.php"
 echo "*/5 * * * * www-data /usr/bin/php $WEBSERVER_ROOT/moodle/admin/cli/cron.php" >>/etc/crontab
