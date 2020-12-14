@@ -37,8 +37,8 @@ RUN apt-get -y install \
   php-xml \
   php-xmlrpc \
   php-zip \
-  supervisor \
   rsync \
+  supervisor \
   wget
 
 ADD ./setup.sh /setup.sh
@@ -49,7 +49,6 @@ ADD ./conf/supervisord.conf /etc/supervisord.conf
 
 RUN curl $DOWNLOAD \
   | tar -xzC /tmp
-RUN find /tmp/moodle ! -user www-data -exec chown www-data: {} +
 
 RUN mkdir -p /etc/apache2/ssl
 RUN /usr/sbin/a2enmod ssl
