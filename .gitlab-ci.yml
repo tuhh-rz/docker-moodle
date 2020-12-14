@@ -65,7 +65,7 @@ build:3.9:
       refs:
         - master
       changes:
-        - ./3.9/**
+        - ./3.9/**/*
     tags:
         - build
     variables:
@@ -83,7 +83,7 @@ deploy:3.9:
       refs:
         - master
       changes:
-        - ./3.9/**
+        - ./3.9/**/*
     variables:
         VERSION: '3.9'
         VARIANT: ''
@@ -96,7 +96,7 @@ build:branches:3.9:
       refs:
         - branches
       changes:
-        - ./3.9/**
+        - ./3.9/**/*
     except:
         - master
     tags:
@@ -116,7 +116,7 @@ deploy:branches:3.9:
       refs:
         - branches
       changes:
-        - ./3.9/**
+        - ./3.9/**/*
     except:
         - master
     variables:
@@ -131,7 +131,7 @@ build:3.8:
       refs:
         - master
       changes:
-        - ./3.8/***
+        - ./3.8/**/*
     tags:
         - build
     variables:
@@ -149,7 +149,7 @@ deploy:3.8:
       refs:
         - master
       changes:
-        - ./3.8/***
+        - ./3.8/**/*
     variables:
         VERSION: '3.8'
         VARIANT: ''
@@ -162,7 +162,7 @@ build:branches:3.8:
       refs:
         - branches
       changes:
-        - ./3.8/***
+        - ./3.8/**/*
     except:
         - master
     tags:
@@ -182,7 +182,7 @@ deploy:branches:3.8:
       refs:
         - branches
       changes:
-        - ./3.8/***
+        - ./3.8/**/*
     except:
         - master
     variables:
@@ -197,7 +197,7 @@ build:3.7:
       refs:
         - master
       changes:
-        - ./3.7/***
+        - ./3.7/**/*
     tags:
         - build
     variables:
@@ -215,7 +215,7 @@ deploy:3.7:
       refs:
         - master
       changes:
-        - ./3.7/***
+        - ./3.7/**/*
     variables:
         VERSION: '3.7'
         VARIANT: ''
@@ -228,7 +228,7 @@ build:branches:3.7:
       refs:
         - branches
       changes:
-        - ./3.7/***
+        - ./3.7/**/*
     except:
         - master
     tags:
@@ -248,7 +248,7 @@ deploy:branches:3.7:
       refs:
         - branches
       changes:
-        - ./3.7/***
+        - ./3.7/**/*
     except:
         - master
     variables:
