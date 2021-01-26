@@ -8,6 +8,13 @@ ARG DOWNLOAD=${DOWNLOAD}
 ENV DOWNLOAD=$DOWNLOAD
 RUN echo $DOWNLOAD
 
+LABEL \
+  de.tuhh.ci_repository_url=$CI_REPOSITORY_URL \
+  de.tuhh.ci_commit_short_sha=$CI_COMMIT_SHORT_SHA \
+  de.tuhh.build-date=$BUILD_DATE \
+  de.tuhh.version=$VERSION \
+  de.tuhh.eol=20250501
+
 # Keep upstart from complaining
 RUN dpkg-divert --local --rename --add /sbin/initctl
 RUN ln -sf /bin/true /sbin/initctl
@@ -59,9 +66,3 @@ RUN sed -i 's/SSLEngine.*/SSLEngine on\nSSLCertificateFile \/etc\/apache2\/ssl\/
 
 EXPOSE 80
 CMD ["/bin/bash", "/setup.sh"]
-
-LABEL \
-  de.tuhh.ci_repository_url=$CI_REPOSITORY_URL \
-  de.tuhh.ci_commit_short_sha=$CI_COMMIT_SHORT_SHA \
-  de.tuhh.build-date=$BUILD_DATE \
-  de.tuhh.version=$VERSION
