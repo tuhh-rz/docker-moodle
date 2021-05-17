@@ -20,9 +20,6 @@
     "3.7": {
       "action": "build"
     },
-    "3.8": {
-      "action": "build"
-    },
     "3.9": {
       "action": "build"
     }

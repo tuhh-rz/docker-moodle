@@ -1,10 +1,10 @@
 variables:
-    CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
-    LATEST_VERSION: '3.9'
-    APP: 'Moodle'
-    APP_OVERVIEW_URL: https://cgi.tu-harburg.de/~rztwww/Software/program_file.json
-    KEY: "${APP} ${VERSION}"
-    MAPPING: '3:3.9'
+  CONTAINER_RELEASE_IMAGE: docker.rz.tu-harburg.de/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME
+  LATEST_VERSION: "3.9"
+  APP: "Moodle"
+  APP_OVERVIEW_URL: https://cgi.tu-harburg.de/~rztwww/Software/program_file.json
+  KEY: "${APP} ${VERSION}"
+  MAPPING: "3:3.9"
 
 .build_script_template:
   script: &build_script_definition
@@ -53,205 +53,122 @@ variables:
     - pwd
     - sudo docker push "${CONTAINER_RELEASE_IMAGE}":"${VERSION}${VARIANT:+-$VARIANT}"_"${CI_COMMIT_REF_NAME}"
 
-
 stages:
-    - build
-    - deploy
+  - build
+  - deploy
 
 build:3.9:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - master
+  stage: build
+  retry: 2
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
       changes:
         - 3.9/**/*
-    tags:
-        - build
-    variables:
-        VERSION: '3.9'
-        VARIANT: ''
-    before_script: *build_before_script_definition
-    script: *build_script_definition
+  tags:
+    - build
+  variables:
+    VERSION: "3.9"
+    VARIANT: ""
+  before_script: *build_before_script_definition
+  script: *build_script_definition
 
 deploy:3.9:
-    stage: deploy
-    needs: ["build:3.9"]
-    tags:
-        - deploy
-    only:
-      refs:
-        - master
+  stage: deploy
+  needs: ["build:3.9"]
+  tags:
+    - deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
       changes:
         - 3.9/**/*
-    variables:
-        VERSION: '3.9'
-        VARIANT: ''
-    script: *deploy_script_definition
+  variables:
+    VERSION: "3.9"
+    VARIANT: ""
+  script: *deploy_script_definition
 
 build:branches:3.9:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - branches
+  stage: build
+  retry: 2
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
       changes:
         - 3.9/**/*
-    except:
-        - master
-    tags:
-        - build
-    variables:
-        VERSION: '3.9'
-        VARIANT: ''
-    before_script: *build_branches_before_script_definition
-    script: *build_branches_script_definition
+  tags:
+    - build
+  variables:
+    VERSION: "3.9"
+    VARIANT: ""
+  before_script: *build_branches_before_script_definition
+  script: *build_branches_script_definition
 
 deploy:branches:3.9:
-    needs: ["build:branches:3.9"]
-    stage: deploy
-    tags:
-        - deploy
-    only:
-      refs:
-        - branches
+  needs: ["build:branches:3.9"]
+  stage: deploy
+  tags:
+    - deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
       changes:
         - 3.9/**/*
-    except:
-        - master
-    variables:
-        VERSION: '3.9'
-        VARIANT: ''
-    script: *deploy_branches_script_definition
-
-build:3.8:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - master
-      changes:
-        - 3.8/**/*
-    tags:
-        - build
-    variables:
-        VERSION: '3.8'
-        VARIANT: ''
-    before_script: *build_before_script_definition
-    script: *build_script_definition
-
-deploy:3.8:
-    stage: deploy
-    needs: ["build:3.8"]
-    tags:
-        - deploy
-    only:
-      refs:
-        - master
-      changes:
-        - 3.8/**/*
-    variables:
-        VERSION: '3.8'
-        VARIANT: ''
-    script: *deploy_script_definition
-
-build:branches:3.8:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - branches
-      changes:
-        - 3.8/**/*
-    except:
-        - master
-    tags:
-        - build
-    variables:
-        VERSION: '3.8'
-        VARIANT: ''
-    before_script: *build_branches_before_script_definition
-    script: *build_branches_script_definition
-
-deploy:branches:3.8:
-    needs: ["build:branches:3.8"]
-    stage: deploy
-    tags:
-        - deploy
-    only:
-      refs:
-        - branches
-      changes:
-        - 3.8/**/*
-    except:
-        - master
-    variables:
-        VERSION: '3.8'
-        VARIANT: ''
-    script: *deploy_branches_script_definition
+  variables:
+    VERSION: "3.9"
+    VARIANT: ""
+  script: *deploy_branches_script_definition
 
 build:3.7:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - master
+  stage: build
+  retry: 2
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
       changes:
         - 3.7/**/*
-    tags:
-        - build
-    variables:
-        VERSION: '3.7'
-        VARIANT: ''
-    before_script: *build_before_script_definition
-    script: *build_script_definition
+  tags:
+    - build
+  variables:
+    VERSION: "3.7"
+    VARIANT: ""
+  before_script: *build_before_script_definition
+  script: *build_script_definition
 
 deploy:3.7:
-    stage: deploy
-    needs: ["build:3.7"]
-    tags:
-        - deploy
-    only:
-      refs:
-        - master
+  stage: deploy
+  needs: ["build:3.7"]
+  tags:
+    - deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "master"'
       changes:
         - 3.7/**/*
-    variables:
-        VERSION: '3.7'
-        VARIANT: ''
-    script: *deploy_script_definition
+  variables:
+    VERSION: "3.7"
+    VARIANT: ""
+  script: *deploy_script_definition
 
 build:branches:3.7:
-    stage: build
-    retry: 2
-    only:
-      refs:
-        - branches
+  stage: build
+  retry: 2
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
       changes:
         - 3.7/**/*
-    except:
-        - master
-    tags:
-        - build
-    variables:
-        VERSION: '3.7'
-        VARIANT: ''
-    before_script: *build_branches_before_script_definition
-    script: *build_branches_script_definition
+  tags:
+    - build
+  variables:
+    VERSION: "3.7"
+    VARIANT: ""
+  before_script: *build_branches_before_script_definition
+  script: *build_branches_script_definition
 
 deploy:branches:3.7:
-    needs: ["build:branches:3.7"]
-    stage: deploy
-    tags:
-        - deploy
-    only:
-      refs:
-        - branches
+  needs: ["build:branches:3.7"]
+  stage: deploy
+  tags:
+    - deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME != "master"'
       changes:
         - 3.7/**/*
-    except:
-        - master
-    variables:
-        VERSION: '3.7'
-        VARIANT: ''
-    script: *deploy_branches_script_definition
+  variables:
+    VERSION: "3.7"
+    VARIANT: ""
+  script: *deploy_branches_script_definition
